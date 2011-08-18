@@ -2,7 +2,7 @@ import cookielib
 import re
 import requests
 
-requests.settings(timeout=1.0)
+requests.settings(timeout=5.0)
 
 def dash(url, user='admin', password='secrete'):
     crsf_regex = re.compile("name='csrfmiddlewaretoken' value='([^']*)'")

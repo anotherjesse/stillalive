@@ -4,7 +4,7 @@ import requests
 
 requests.settings(timeout=5.0)
 
-def dash(url, user='admin', password='secrete'):
+def dash(url, tenant='admin', user='admin', password='secrete'):
     crsf_regex = re.compile("name='csrfmiddlewaretoken' value='([^']*)'")
     login_regex = re.compile("auth")
     error_regex = re.compile("Error")
@@ -31,7 +31,7 @@ def dash(url, user='admin', password='secrete'):
     assert not re.search(login_regex, r.url), 'user dash fail (redirected to login)'
     assert not re.search(error_regex, r.content), 'error displayed on user dash'
 
-    r = requests.get(url+'/dash/images/', cookies=jar)
+    r = requests.get(url+'/dash/%s/images/' % tenant, cookies=jar)
     assert r.status_code == 200, 'fail to access dash/images'
     assert not re.search(login_regex, r.url), 'images fail (redirected to login)'
     assert not re.search(error_regex, r.content), '(glance?) error displayed'
